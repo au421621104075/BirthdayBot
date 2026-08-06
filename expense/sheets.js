@@ -16,7 +16,7 @@ const SPREADSHEET_ID = process.env.SPREADSHEET_ID;
 const SHEET_NAME = process.env.EXPENSE_SHEET;
 
 // Add Expense
-async function addExpense(date, time, amount, category, notes) {
+async function addExpense(date, time, amount, category, notes, username,phone) {
 
       // Get existing expenses
     const expenses = await getExpenses();
@@ -26,10 +26,10 @@ async function addExpense(date, time, amount, category, notes) {
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: SPREADSHEET_ID,
-    range: `${SHEET_NAME}!A:F`,
+    range: `${SHEET_NAME}!A:H`,
     valueInputOption: "USER_ENTERED",
     requestBody: {
-      values: [[id,date, time, amount, category, notes]],
+      values: [[id,date, time, amount, category, notes, username,phone]],
     },
   });
 }
@@ -45,7 +45,7 @@ async function updateExpense(id, amount, category, notes) {
 
             await sheets.spreadsheets.values.update({
                 spreadsheetId: SPREADSHEET_ID,
-                range: `${SHEET_NAME}!A${i + 1}:F${i + 1}`,
+                range: `${SHEET_NAME}!A${i + 1}:H${i + 1}`,
                 valueInputOption: "USER_ENTERED",
                 requestBody: {
                     values: [[
@@ -54,7 +54,9 @@ async function updateExpense(id, amount, category, notes) {
                         rows[i][2], // Time
                         amount,
                         category,
-                        notes
+                        notes,
+                        rows[i][6], // Username
+                        rows[i][7]  // Phone
                     ]]
                 }
             });
@@ -69,7 +71,7 @@ async function updateExpense(id, amount, category, notes) {
 async function getExpenses() {
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: SPREADSHEET_ID,
-    range: `${SHEET_NAME}!A:F`,
+    range: `${SHEET_NAME}!A:H`,
   });
 
   return response.data.values || [];
