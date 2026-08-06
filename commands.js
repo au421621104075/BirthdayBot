@@ -36,7 +36,7 @@
 // module.exports = handleCommand;
 
 const { addUser } = require("./sheets");
-
+const { handleExpenseCommand } = require("./expense");
 
 async function handleCommand(sock, msg, text) {
 
@@ -135,8 +135,20 @@ Relation: ${user.relation}`
 
     }
 
+  // Expense Commands
+    if (
+        command.startsWith("expense") ||
+        command.toLowerCase().startsWith("update") ||
+        command === "today" ||
+        command === "week" ||
+        command === "month"
+    ) {
+        return await handleExpenseCommand(sock, msg, text);
+    }
+
 
 }
 
 
 module.exports = handleCommand;
+
