@@ -61,6 +61,19 @@ sock.ev.on("messages.upsert", async ({ messages }) => {
 
     if (!msg.message) return;
 
+    // Get username
+    const username = msg.pushName || "Unknown";
+
+    // Get phone number
+    const phone =
+        msg.key.participant || msg.key.remoteJid;
+
+    const phoneNumber = phone.replace("@s.whatsapp.net", "");
+
+    console.log(username);
+    console.log(phoneNumber);
+
+
 
     const text =
         msg.message.conversation ||
@@ -71,7 +84,7 @@ sock.ev.on("messages.upsert", async ({ messages }) => {
 
 
     console.log("Message :", text);
-    await handleCommand(sock, msg, text);
+    await handleCommand(sock, msg, text,username,phoneNumber);
 
 
 

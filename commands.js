@@ -38,7 +38,7 @@
 const { addUser } = require("./sheets");
 const { handleExpenseCommand } = require("./expense");
 
-async function handleCommand(sock, msg, text) {
+async function handleCommand(sock, msg, text, username,phoneNumber) {
 
     const command = text.toLowerCase();
 
@@ -48,7 +48,7 @@ async function handleCommand(sock, msg, text) {
         await sock.sendMessage(
             msg.key.remoteJid,
             {
-                text: "Hello 👋 Welcome to Birthday Bot"
+                text: "Hello 👋 have a nice day !"
             }
         );
 
@@ -143,7 +143,7 @@ Relation: ${user.relation}`
         command === "week" ||
         command === "month"
     ) {
-        return await handleExpenseCommand(sock, msg, text);
+        return await handleExpenseCommand(sock, msg, text, username,phoneNumber);
     }
 
 

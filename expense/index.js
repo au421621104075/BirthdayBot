@@ -5,9 +5,9 @@ const {
   getMonthlyReport,
 } = require("./report");
 
-async function handleExpenseCommand(sock, msg, message) {
+async function handleExpenseCommand(sock, msg, message, username,phoneNumber) {
   if (message.toLowerCase().startsWith("expense")) {
-    return await addExpenseCommand(sock, msg, message);
+    return await addExpenseCommand(sock, msg, message, username,phoneNumber);
   }
   if (message.toLowerCase().startsWith("update")) {
     return await updateExpenseCommand(sock, msg, message);

@@ -2,7 +2,7 @@ const { addExpense } = require("./sheets");
 const { updateExpense } = require("./sheets");
 
 //add the expense commands
-async function addExpenseCommand(sock, msg, message) {
+async function addExpenseCommand(sock, msg, message,username,phoneNumber) {
   try {
     // Remove the word "expense"
     const data = message.replace(/^expense\s+/i, "").trim();
@@ -41,8 +41,15 @@ async function addExpenseCommand(sock, msg, message) {
     });
 
     // Save to Google Sheet
-    await addExpense(date, time, amount, category, notes);
-
+await addExpense(
+    date,
+    time,
+    amount,
+    category,
+    notes,
+    username,
+    phoneNumber
+);
     // Reply
     await sock.sendMessage(msg.key.remoteJid, {
       text:
