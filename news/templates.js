@@ -1,4 +1,27 @@
-function formatNews(category, newsItems) {
+async function shortURL(longURL) {
+
+    try {
+
+        const response = await fetch(
+            `https://tinyurl.com/api-create.php?url=${encodeURIComponent(longURL)}`
+        );
+
+        const shortUrl = await response.text();
+
+        return shortUrl;
+
+    } catch (error) {
+
+        console.log("Short URL Error:", error.message);
+
+        return longURL;
+
+    }
+
+}
+
+
+async function formatNews(category, newsItems) {
 
     if (!newsItems || newsItems.length === 0) {
 
@@ -8,21 +31,24 @@ function formatNews(category, newsItems) {
 
     let message = `📰 ${category.toUpperCase()} NEWS\n\n`;
 
-    newsItems.forEach((item, index) => {
+    for (const [index, item] of newsItems.entries()) {
 
         message += `${index + 1}. ${item.title}\n`;
 
         if (item.link) {
 
-            message += `${item.link}\n`;
+            const shortLink = await shortURL(item.link);
+
+            message += `🔗 ${shortLink}\n`;
 
         }
 
         message += `\n`;
 
-    });
+    }
 
     return message;
+
 }
 
 

@@ -44,12 +44,23 @@ async function handleCommand(sock, msg, text, username,phoneNumber) {
     const command = text.toLowerCase();
 
 
-    if(command === "hi") {
+    if(command === "hi" || command ==="hello") {
 
         await sock.sendMessage(
             msg.key.remoteJid,
             {
                 text: "Hello 👋 have a nice day !"
+            }
+        );
+
+    }
+
+        if(command === "Good Morning" || command ==="good evening") {
+
+        await sock.sendMessage(
+            msg.key.remoteJid,
+            {
+                text: "Good day to YOU 👋 !"
             }
         );
 

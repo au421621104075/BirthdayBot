@@ -67,7 +67,7 @@ news business`
 
 
         const formattedMessage =
-            formatNews(actualCategory, newsItems);
+    await formatNews(actualCategory, newsItems);
 
 
         await sock.sendMessage(msg.key.remoteJid, {

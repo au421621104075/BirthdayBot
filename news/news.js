@@ -48,6 +48,7 @@ async function getNews(category) {
 }
 
 
+
 module.exports = {
     getNews
 };
