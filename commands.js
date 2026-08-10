@@ -37,6 +37,7 @@
 
 const { addUser } = require("./sheets");
 const { handleExpenseCommand } = require("./expense");
+const handleNewsCommand = require("./news");
 
 async function handleCommand(sock, msg, text, username,phoneNumber) {
 
@@ -71,6 +72,13 @@ add - Add birthday user
 
 expense --expense added
 week,month ,today
+news - Tamil news 
+news india - India news 
+news world - World news 
+news sports - Sports news 
+news cinema - Cinema news 
+news tech - Technology news 
+news business - Business news
 
 Example:
 add Lavanya 5 8 2003 Friend 919363130450
@@ -152,6 +160,15 @@ Relation: ${user.relation}`
     ) {
         return await handleExpenseCommand(sock, msg, text, username,phoneNumber);
     }
+
+
+    // News Commands
+if (
+    command === "news" ||
+    command.startsWith("news ")
+) {
+    return await handleNewsCommand(sock, msg, text);
+}
 
 
 }
