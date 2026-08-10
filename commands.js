@@ -61,7 +61,7 @@ async function handleCommand(sock, msg, text, username,phoneNumber) {
             msg.key.remoteJid,
             {
                 text:
-`🎂 Birthday Bot Commands
+`Help commands:
 
 hi - Welcome message
 
@@ -69,8 +69,15 @@ help - Show commands
 
 add - Add birthday user
 
+expense --expense added
+week,month ,today
+
 Example:
-add Lavanya 5 8 2003 Friend 919363130450`
+add Lavanya 5 8 2003 Friend 919363130450
+expense 250,house,notes
+update id,cost,catalogy,notes
+
+`
             }
         );
 
