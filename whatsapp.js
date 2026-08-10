@@ -19,6 +19,18 @@ async function startWhatsApp() {
         version
     });
 
+    // Show bot replies in terminal
+const originalSendMessage = sock.sendMessage.bind(sock);
+
+sock.sendMessage = async (jid, content, options) => {
+
+    if (content?.text) {
+        console.log("🤖 Bot Reply:", content.text);
+    }
+
+    return originalSendMessage(jid, content, options);
+};
+
     sock.ev.on("creds.update", saveCreds);
 
     sock.ev.on("connection.update", ({ connection, qr, lastDisconnect }) => {
@@ -62,7 +74,10 @@ sock.ev.on("messages.upsert", async ({ messages }) => {
     if (!msg.message) return;
 
     // Get username
-    const username = msg.pushName || "Unknown";
+    const username = msg.pushName ;
+
+    // Ignore messages without username
+    if (!username) return;
 
     // Get phone number
     const phone =
@@ -70,8 +85,21 @@ sock.ev.on("messages.upsert", async ({ messages }) => {
 
     const phoneNumber = phone.replace("@s.whatsapp.net", "");
 
-    console.log(username);
-    console.log(phoneNumber);
+    console.log("username :",username);
+    console.log("phonenumber :",phoneNumber);
+
+    // Check authorized username
+const allowedUsername = process.env.ALLOWED_USERNAME || "";
+
+if (
+    !username ||
+    username.trim().toLowerCase() !== allowedUsername.trim().toLowerCase()
+) {
+    console.log("❌ Unauthorized user:", username);
+    return;
+}
+
+console.log("✅ Authorized user:", username);
 
 
 
